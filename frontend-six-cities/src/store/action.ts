@@ -1,9 +1,23 @@
 import type { History } from 'history';
 import type { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { UserAuth, User, Offer, Comment, CommentAuth, FavoriteAuth, UserRegister, NewOffer } from '../types/types';
+import type { UserAuth, User, Offer, Comment, CommentAuth, FavoriteAuth, UserRegister, NewOrEditOffer } from '../types/types';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 import { Token } from '../utils';
+import {OFFER_STATUSES} from '../const.js';
+import {
+  adaptCommentsToClient, adaptCommentToClient,
+  adaptOfferToClient,
+  adaptPreviewOffersToClient
+} from '../utils/adapters/adaptersToClient.js';
+import OfferDto from '../dto/offer/offer.dto';
+import {
+  adaptCreateOfferToServer,
+  adaptEditOfferToServer,
+} from '../utils/adapters/adaptersToServer.js';
+import ReviewDto from '../dto/review/review.dto';
+import { PreviewOffer } from '../types/PreviewOffer';
+
 
 type Extra = {
   api: AxiosInstance;
@@ -28,23 +42,25 @@ export const Action = {
   REGISTER_USER: 'user/register',
 };
 
-export const fetchOffers = createAsyncThunk<Offer[], undefined, { extra: Extra }>(
+
+export const fetchOffers = createAsyncThunk<PreviewOffer[], undefined, { extra: Extra }>(
   Action.FETCH_OFFERS,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Offer[]>(ApiRoute.Offers);
-
-    return data;
+    const { data } = await api.get<OfferDto[]>(ApiRoute.Offers);
+    return adaptPreviewOffersToClient(data);
   });
 
-export const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, { extra: Extra }>(
+
+export const fetchFavoriteOffers = createAsyncThunk<PreviewOffer[], undefined, { extra: Extra }>(
   Action.FETCH_FAVORITE_OFFERS,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Offer[]>(ApiRoute.Favorite);
+    const { data } = await api.get<OfferDto[]>(ApiRoute.Favorite);
 
-    return data;
+    return adaptPreviewOffersToClient(data);
   });
+
 
 export const fetchOffer = createAsyncThunk<Offer, Offer['id'], { extra: Extra }>(
   Action.FETCH_OFFER,
@@ -52,9 +68,9 @@ export const fetchOffer = createAsyncThunk<Offer, Offer['id'], { extra: Extra }>
     const { api, history } = extra;
 
     try {
-      const { data } = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
+      const { data } = await api.get<OfferDto>(`${ApiRoute.Offers}/${id}`);
 
-      return data;
+      return adaptOfferToClient(data);
     } catch (error) {
       const axiosError = error as AxiosError;
 
@@ -66,25 +82,32 @@ export const fetchOffer = createAsyncThunk<Offer, Offer['id'], { extra: Extra }>
     }
   });
 
-export const postOffer = createAsyncThunk<Offer, NewOffer, { extra: Extra }>(
+
+export const postOffer = createAsyncThunk<Offer, NewOrEditOffer, { extra: Extra }>(
   Action.POST_OFFER,
   async (newOffer, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<Offer>(ApiRoute.Offers, newOffer);
+    const { data, status } = await api.post<OfferDto>(ApiRoute.Offers, adaptCreateOfferToServer(newOffer));
+    await postImages(api, status, data.id, newOffer);
+
     history.push(`${AppRoute.Property}/${data.id}`);
 
-    return data;
+    return adaptOfferToClient(data);
   });
 
-export const editOffer = createAsyncThunk<Offer, Offer, { extra: Extra }>(
+
+export const editOffer = createAsyncThunk<Offer, NewOrEditOffer, { extra: Extra }>(
   Action.EDIT_OFFER,
   async (offer, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.patch<Offer>(`${ApiRoute.Offers}/${offer.id}`, offer);
+    const { data, status } = await api.patch<OfferDto>(`${ApiRoute.Offers}/${offer.id}`, adaptEditOfferToServer(offer));
+    await postImages(api, status, data.id, offer);
+
     history.push(`${AppRoute.Property}/${data.id}`);
 
-    return data;
+    return adaptOfferToClient(data);
   });
+
 
 export const deleteOffer = createAsyncThunk<void, string, { extra: Extra }>(
   Action.DELETE_OFFER,
@@ -94,23 +117,26 @@ export const deleteOffer = createAsyncThunk<void, string, { extra: Extra }>(
     history.push(AppRoute.Root);
   });
 
-export const fetchPremiumOffers = createAsyncThunk<Offer[], string, { extra: Extra }>(
+
+export const fetchPremiumOffers = createAsyncThunk<PreviewOffer[], string, { extra: Extra }>(
   Action.FETCH_PREMIUM_OFFERS,
   async (cityName, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Offer[]>(`${ApiRoute.Premium}?city=${cityName}`);
+    const { data } = await api.get<OfferDto[]>(`${ApiRoute.Offers}/${ApiRoute.Premium}/${cityName}`);
 
-    return data;
+    return adaptPreviewOffersToClient(data);
   });
+
 
 export const fetchComments = createAsyncThunk<Comment[], Offer['id'], { extra: Extra }>(
   Action.FETCH_COMMENTS,
   async (id, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<Comment[]>(`${ApiRoute.Offers}/${id}${ApiRoute.Comments}`);
+    const { data } = await api.get<ReviewDto[]>(`${ApiRoute.Comments}/${id}`);
 
-    return data;
+    return adaptCommentsToClient(data);
   });
+
 
 export const fetchUserStatus = createAsyncThunk<UserAuth['email'], undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
@@ -132,6 +158,7 @@ export const fetchUserStatus = createAsyncThunk<UserAuth['email'], undefined, { 
     }
   });
 
+
 export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
@@ -145,6 +172,7 @@ export const loginUser = createAsyncThunk<UserAuth['email'], UserAuth, { extra: 
     return email;
   });
 
+
 export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
   async (_, { extra }) => {
@@ -153,6 +181,7 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
 
     Token.drop();
   });
+
 
 export const registerUser = createAsyncThunk<void, UserRegister, { extra: Extra }>(
   Action.REGISTER_USER,
@@ -166,8 +195,8 @@ export const registerUser = createAsyncThunk<void, UserRegister, { extra: Extra 
     });
     if (avatar) {
       const payload = new FormData();
-      payload.append('avatar', avatar);
-      await api.post(`/${data.id}${ApiRoute.Avatar}`, payload, {
+      payload.append('avatarUrl', avatar);
+      await api.post(`${ApiRoute.Avatar}/${data.id}`, payload, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
     }
@@ -179,12 +208,13 @@ export const postComment = createAsyncThunk<Comment, CommentAuth, { extra: Extra
   Action.POST_COMMENT,
   async ({ id, comment, rating }, { extra }) => {
     const { api } = extra;
-    const { data } = await api.post<Comment>(`${ApiRoute.Offers}/${id}${ApiRoute.Comments}`, { comment, rating });
+    const { data } = await api.post<ReviewDto>(`${ApiRoute.Comments}/${id}`, { comment, rating });
 
-    return data;
+    return adaptCommentToClient(data);
   });
 
-export const postFavorite = createAsyncThunk<
+
+export const patchFavorite = createAsyncThunk<
   Offer,
   FavoriteAuth,
   { extra: Extra }
@@ -192,11 +222,11 @@ export const postFavorite = createAsyncThunk<
   const { api, history } = extra;
 
   try {
-    const { data } = await api.post<Offer>(
-      `${ApiRoute.Favorite}/${id}`
+    const { data } = await api.patch<OfferDto>(
+      `${ApiRoute.Favorite}/${id}/${OFFER_STATUSES.FAVORITE}`
     );
 
-    return data;
+    return adaptOfferToClient(data);
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -207,6 +237,7 @@ export const postFavorite = createAsyncThunk<
     return Promise.reject(error);
   }
 });
+
 
 export const deleteFavorite = createAsyncThunk<
   Offer,
@@ -216,11 +247,11 @@ export const deleteFavorite = createAsyncThunk<
   const { api, history } = extra;
 
   try {
-    const { data } = await api.delete<Offer>(
-      `${ApiRoute.Favorite}/${id}`
+    const { data } = await api.patch<OfferDto>(
+      `${ApiRoute.Favorite}/${id}/${OFFER_STATUSES.NOT_FAVORITE}`
     );
 
-    return data;
+    return adaptOfferToClient(data);
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -231,3 +262,26 @@ export const deleteFavorite = createAsyncThunk<
     return Promise.reject(error);
   }
 });
+
+const postImages = async (api: AxiosInstance, status: number, offerId: string, offer: NewOrEditOffer) => {
+  if (status === HttpCode.Created || status === HttpCode.OK) {
+    if (offer.previewImage) {
+      const payload = new FormData();
+      payload.append('previewImage', offer.previewImage);
+      await api.post(`${ApiRoute.Offers}/${offerId}/previewImage`, payload, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+    }
+    if (offer.images.length) {
+      const payload = new FormData();
+      offer.images
+        .filter((offerImage) => offerImage)
+        .map(async (offerImage, index) => {
+          payload.append('photos', offerImage);
+        });
+      await api.post(`${ApiRoute.Offers}/${offerId}/image`, payload, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+    }
+  }
+};

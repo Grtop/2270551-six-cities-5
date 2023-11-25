@@ -92,6 +92,11 @@ export enum SubmitStatus {
   Rejected = 'REJECTED',
 }
 
+export const OFFER_STATUSES = {
+  FAVORITE: 1,
+  NOT_FAVORITE: 0
+};
+
 export const Comparator: {
   [key in SortName]: (a: Offer, b: Offer) => number;
 } = {

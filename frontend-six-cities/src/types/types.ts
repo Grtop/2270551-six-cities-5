@@ -62,7 +62,7 @@ export type Offer = {
   type: Type;
   bedrooms: number;
   description: string;
-  goods: string[];
+  goods: string;
   host: User;
   images: string[];
   maxAdults: number;
@@ -86,15 +86,18 @@ export type NewOrEditOffer = {
   title: string;
   description: string;
   city: City;
-  previewImage: File | undefined;
+  previewImage: string;
   isPremium: boolean;
+  isFavorite: boolean;
   type: Type;
   bedrooms: number;
   maxAdults: number;
   price: number;
+  rating: number;
+ // host: User;
   goods: string[];
   location: Location;
-  images: File[];
+  images: string[];
 };
 
 
@@ -104,9 +107,11 @@ export type NewOffer = {
   city: City;
   previewImage: string;
   isPremium: boolean;
+  isFavorite: boolean;
   type: Type;
   bedrooms: number;
   maxAdults: number;
+  rating: number;
   price: number;
   goods: string[];
   location: Location;

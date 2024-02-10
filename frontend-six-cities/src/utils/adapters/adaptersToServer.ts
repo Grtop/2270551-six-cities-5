@@ -11,11 +11,11 @@ export const adaptCreateOfferToServer =
     coords: offer.location,
     image: ' ',
     description: offer.description,
-    preview: offer.previewImage ? offer.previewImage.name : undefined,
+    preview: offer.previewImage ? offer.previewImage : undefined,
     houseType: adaptOfferType(offer.type),
     roomNumber: offer.bedrooms,
     goods: offer.goods,
-    photos: offer.images.map(({ name }) => name),
+    //photos: offer.images.map(({ name }) => name),
     guests: offer.maxAdults,
     postDate: new Date()
   });
@@ -29,11 +29,11 @@ export const adaptEditOfferToServer =
     city: offer.city.name,
     coords: offer.location,
     description: offer.description,
-    preview: offer.previewImage ? offer.previewImage.name : undefined,
+    preview: offer.previewImage ? offer.previewImage : undefined,
     houseType: adaptOfferType(offer.type),
     roomNumber: offer.bedrooms,
     goods: offer.goods,
-    photos: offer.images.map(({ name }) => name),
+    //photos: offer.images.map(({ name }) => name),
     guests: offer.maxAdults,
     postDate: new Date()
   });

@@ -16,11 +16,13 @@ export default class OfferDto {
   public guests!: number;
   public price!: number;
   public features!: Feature[];
-  public userId?: string;
+  public User!: UserDto;
   public coords!: Coords;
   public rating!: number;
   public author!: UserDto;
-  public goods!: string[];
+  public goods!: string;
+  public bedrooms!: number;
+  public maxAdults!: number;
 
 
 }

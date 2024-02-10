@@ -15,9 +15,13 @@ export const adaptPreviewOffersToClient = (offers: OfferDto[]): PreviewOffer[] =
     city: offer.city,
     location: offer.coords,
     description: offer.description,
+    host:offer.User,
+    goods: offer.goods,
     previewImage: offer.preview,
-    type: offer.houseType,
+    bedrooms: offer.bedrooms,
+    type: [],
     images: offer.photos,
+    maxAdults: offer.maxAdults,
   }))
 );
 

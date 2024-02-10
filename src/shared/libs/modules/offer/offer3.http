@@ -1,11 +1,11 @@
 ## Добавить новое предложение
 POST http://localhost:5000/offers HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTY5OTczMzE2NywiZXhwIjoxNjk5OTA1OTY3fQ.Hpcl5p9atFZedJ2WIjQUKeDlUYSYleT6Fr9IATZt9Vw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 Content-Type: application/json
 
 {
-  "id": "67777794c57e98df0797777e",
-  "title": "ПРОВЕРКА ПРЕМИАЛЬНЫХ БРЮССЕЛЬ ПРЕДЛОЖЕНИЙ",
+  "id": "654141c3b279c897ef68a782",
+  "title": "ПРОВЕРКА СУПЕР ПРЕМИАЛЬНЫХ БРЮССЕЛЬ ПРЕДЛОЖЕНИЙ",
   "description": "Discover the unique five-star Salute Inn hotel.",
   "postDate": "2023-11-06T09:50:49.728Z",
   "city": "brussels",
@@ -41,7 +41,7 @@ Content-Type: application/json
 ###
 
 ## Изменит предложение
-PATCH http://localhost:5000/offers/65787794c57e98df0792177e HTTP/1.1
+PATCH http://localhost:5000/offers/654141c3b279c897ef68a782 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTY5OTczMzE2NywiZXhwIjoxNjk5OTA1OTY3fQ.Hpcl5p9atFZedJ2WIjQUKeDlUYSYleT6Fr9IATZt9Vw
 Content-Type: application/json
 

@@ -1,7 +1,7 @@
 ## Создать новое предложение
 
 POST http://localhost:5000/offers HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTY5OTcyNTYzMiwiZXhwIjoxNjk5ODk4NDMyfQ.Z8lRa_aJ4ARvONuzhvLfezCd1uEsskpKV8txlYp37Rs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 Content-Type: application/json
 
 {
@@ -39,13 +39,13 @@ Content-Type: application/json
  # Получить объявление по идентификатору
 GET http://localhost:5000/offers/65298b48d6b7d2346689009f HTTP/1.1
 
- ###
+###
 
 
 ## Создать новое предложение
 
 POST http://localhost:5000/offers HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTY5OTczNjUzMywiZXhwIjoxNjk5OTA5MzMzfQ.dQ2s0HdaYPK193DYLfn4yYfqFkR70jOThNHgD_qOfPc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 Content-Type: application/json
 
 {
@@ -89,7 +89,7 @@ Content-Type: application/json
  ## Создать новое предложение
 
 POST http://localhost:5000/offers HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTY5OTczNjUzMywiZXhwIjoxNjk5OTA5MzMzfQ.dQ2s0HdaYPK193DYLfn4yYfqFkR70jOThNHgD_qOfPc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 Content-Type: application/json
 
 {

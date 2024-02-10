@@ -17,19 +17,18 @@ Content-Type: application/json
 
 ## Проверить токен пользователя
 GET http://localhost:5000/users/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InR1Z2VyQG1haWwucnUiLCJuYW1lIjoiVGlnZXIgU2liYmVyIiwiaWQiOiI2NTQ2NmYwMmE1ZWFlMGM3N2NiNmQxMGMiLCJpYXQiOjE2OTk3MTY2MDQsImV4cCI6MTY5OTg4OTQwNH0.NUcYVkpr2o85Jxk6i6QFwxQ_7jnVi7yPhAKt6rcbDz4
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 ###
 
 ## Создать нового пользователя
 
 POST http://localhost:5000/users/register HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InR1Z2VyQG1haWwucnUiLCJuYW1lIjoiVGlnZXIgU2liYmVyIiwiaWQiOiI2NTQ2NmYwMmE1ZWFlMGM3N2NiNmQxMGMiLCJpYXQiOjE2OTk3MTY2MDQsImV4cCI6MTY5OTg4OTQwNH0.NUcYVkpr2o85Jxk6i6QFwxQ_7jnVi7yPhAKt6rcbDz4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 Content-Type: application/json
 
 {
-  "mail": "enot3@mail.ru",
-  "name": "Enot3 Sibber",
+  "mail": "enot11@mail.ru",
+  "name": "NIGHTEnot1 Siber",
   "password": "supersuper",
   "type": "ordinary",
   "avatarUrl": "/Users/Desktop/Avatar-Greg.png"
@@ -41,7 +40,7 @@ Content-Type: application/json
 
  ## Отправить изображение
 POST  http://localhost:5000/users/65298b47d6b7d2346689008d/avatar HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwMDA0NDYxNSwiZXhwIjoxNzAwMjE3NDE1fQ.PFLLqCZfQyniv_yVO3jV8UiO9vj3sRVqjHfkyTeum40
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVub3QxMUBtYWlsLnJ1IiwibmFtZSI6IkVub3QxMSBTaWJiZXIiLCJpZCI6IjY1NGZhOGIwNjBjYWFjMmMzNGViMzRmZiIsImlhdCI6MTcwNzYwMzEzNSwiZXhwIjoxNzA3Nzc1OTM1fQ.qkxznzj8YOJOEOy6h0PNSo1UFeAYtAYwTDDYCOZqS2s
 Content-Disposition: form-data; name="avatar"; filename="avatar.png"
 Content-Type: image/jpeg
 

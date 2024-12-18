@@ -1,47 +1,42 @@
-import { CliCommandInterface } from './commands/command.interface.js';
+import { Command} from "./commands/command.interface";
+import { CommandParser } from "./command-parser";
 
-type ParsedCommand = {
-  [key: string]: string[]
-}
 
-export default class CLIApplication {
-  private commands: { [propertyName: string]: CliCommandInterface } = {};
-  private defaultCommand = '--help';
+type CommandCollection = Record <string, Command>;
 
-  private parseCommand(cliArguments: string[]): ParsedCommand {
-    const parsedCommand: ParsedCommand = {};
-    let command = '';
+export class CLIApplication {
+  private commands: CommandCollection ={};
 
-    return cliArguments.reduce((acc, item) => {
-      if (item.startsWith('--')) {
-        acc[item] = [];
-        command = item;
-      } else if (command && item) {
-        acc[command].push(item);
+  constructor(
+    private readonly defaultCommand: string = '--help'
+  ) {}
+
+  public registerCommands (commadList: Command[]):void {
+    commadList.forEach((command) => {
+      if(Object.hasOwn(this.commands, command.getName())) {
+        throw new Error(`Command ${command.getName()} is already registered`);
       }
-
-      return acc;
-    }, parsedCommand);
+      this.commands[command.getName()] = command;
+    });
   }
 
-  public getCommand(commandName: string): CliCommandInterface {
-    return this.commands[commandName] ?? this.commands[this.defaultCommand];
+  public getCommand(commandName: string): Command {
+    return this.commands[commandName] ?? this.getDefaultCommand();
+  }
+
+  public getDefaultCommand(): Command | never {
+    if (! this.commands[this.defaultCommand]) {
+      throw new Error(`The default command (${this.defaultCommand}) is not registered.`);
+    }
+    return this.commands[this.defaultCommand];
   }
 
   public processCommand(argv: string[]): void {
-    const parsedCommand = this.parseCommand(argv);
+    const parsedCommand = CommandParser.parse(argv);
     const [commandName] = Object.keys(parsedCommand);
     const command = this.getCommand(commandName);
     const commandArguments = parsedCommand[commandName] ?? [];
     command.execute(...commandArguments);
-  }
-
-  public registerCommands(commandList: CliCommandInterface[]): void {
-    commandList.reduce((acc, command) => {
-      const cliCommand = command;
-      acc[cliCommand.name] = cliCommand;
-      return acc;
-    }, this.commands);
   }
 
 }

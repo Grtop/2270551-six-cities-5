@@ -13,7 +13,6 @@ export class CommandParser {
         parsedCommand[currentCommand].push(argument);
       }
     }
-
     return parsedCommand;
-  }
+ }
 }

@@ -1,5 +1,5 @@
-export interface CliCommandInterface {
-  readonly name: string;
-  execute(...parameters: string[]): void;
+interface Command {
+  getName (): string;
+  execute (... parameters: string[]): void;
 }
-
+export {Command};
